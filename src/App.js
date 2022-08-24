@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import logo from "./logo.svg";
+import "./App.css";
+import ChooseAccount from "./component/chooseAccount/chooseAccount";
+import MainMenu from "./component/mainMenu/mainMenu";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <header>
+      <Routes>
+        <Route path="/" element={<ChooseAccount />}></Route>
+        <Route path="/:id" element={<MainMenu />}></Route>
+      </Routes>
+      {/* <div className="App">
+        <ChooseAccount />
+      </div> */}
+    </header>
   );
 }
 

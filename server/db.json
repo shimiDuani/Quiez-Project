@@ -1,0 +1,53 @@
+{
+  "Account": [
+    {
+      "id": 1,
+      "name": "ben gurion",
+      "Topics": ["English", "Matematic", "Biolegi"]
+    },
+    {
+      "id": 2,
+      "name": "tel aviv",
+      "Topics": ["English", "Matematic", "Biolegi"]
+    }
+  ],
+
+  "Question": [
+    {
+      "id": 1,
+      "text": "",
+      "tag": "",
+      "type": "",
+      "language": "",
+      "isActivate": false,
+      "Answers": ""
+    },
+    {
+      "id": 2,
+      "text": "",
+      "tag": "",
+      "type": "",
+      "language": "",
+      "isActivate": false,
+      "Answers": ""
+    },
+    {
+      "id": 3,
+      "text": "",
+      "tag": "",
+      "type": "",
+      "language": "",
+      "isActivate": false,
+      "Answers": ""
+    },
+    {
+      "id": 4,
+      "text": "",
+      "tag": "",
+      "type": "",
+      "language": "",
+      "isActivate": false,
+      "Answers": ""
+    }
+  ]
+}
