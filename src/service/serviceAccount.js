@@ -1,4 +1,4 @@
-class Service {
+class ServiceAccount {
   get() {
     return fetch("http://localhost:3030/account")
       .then(this.success)
@@ -51,4 +51,5 @@ class Service {
     console.log(error);
   }
 }
-export default Service;
+export default ServiceAccount;
+//http://localhost:4000/api/Questions/getQuestions

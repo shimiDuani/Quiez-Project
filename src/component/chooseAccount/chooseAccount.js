@@ -3,22 +3,26 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DropDown from "../../globalComponent/dropDownComponent/dropDownComponent";
 import Button from "../../globalComponent/buttonComponent/buttonComponent";
-import Service from "../../service/service";
+import ServiceAccount from "../../service/serviceAccount";
+import "./chooseAccount.scss";
 
 const ChooseAccount = () => {
+  const service = new ServiceAccount();
   const navigate = useNavigate();
+  const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState([]);
-
-  const service = new Service();
 
   useEffect(() => {
     service.get().then((accounts) => {
-      setAccount(accounts);
+      console.log(accounts);
+      setAccounts(accounts);
+      setAccount(accounts[0].id);
     });
   }, []);
 
-  const goToAccount = (id) => {
-    navigate("/" + id);
+  const goToAccount = () => {
+    console.log(account);
+    navigate("/" + account); //send account.id
   };
 
   const handleChange = (event) => {
@@ -26,14 +30,16 @@ const ChooseAccount = () => {
   };
 
   return (
-    <div>
+    <div className="choose">
       <DropDown
         text={"Choose Account:"}
-        value={account}
-        options={account.Name}
+        options={accounts}
         onChange={handleChange}
+        value={account}
       />
-      <Button onClick={goToAccount} text={"Submit"} />
+      <div className="submit">
+        <Button onClick={goToAccount}>Submit</Button>
+      </div>
     </div>
   );
 };

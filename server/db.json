@@ -3,51 +3,45 @@
     {
       "id": 1,
       "name": "ben gurion",
-      "Topics": ["English", "Matematic", "Biolegi"]
+      "topics": ["English", "Matematic", "Biolegi"]
     },
     {
       "id": 2,
       "name": "tel aviv",
-      "Topics": ["English", "Matematic", "Biolegi"]
+      "topics": ["English", "Matematic", "Biolegi"]
     }
   ],
 
   "Question": [
     {
       "id": 1,
-      "text": "",
-      "tag": "",
-      "type": "",
-      "language": "",
+      "text": "What is a ",
+      "tag": "JavaScript| Advanced",
+      "type": "Single",
+      "language": "English",
       "isActivate": false,
-      "Answers": ""
-    },
-    {
-      "id": 2,
-      "text": "",
-      "tag": "",
-      "type": "",
-      "language": "",
-      "isActivate": false,
-      "Answers": ""
-    },
-    {
-      "id": 3,
-      "text": "",
-      "tag": "",
-      "type": "",
-      "language": "",
-      "isActivate": false,
-      "Answers": ""
-    },
-    {
-      "id": 4,
-      "text": "",
-      "tag": "",
-      "type": "",
-      "language": "",
-      "isActivate": false,
-      "Answers": ""
+      "Answers": [
+        {
+          "id": 1,
+          "text": "dddddddddd",
+          "isCorrct": false
+        },
+        {
+          "id": 2,
+          "text": "fffffffffff",
+          "isCorrct": false
+        },
+        {
+          "id": 3,
+          "text": "asdas",
+          "isCorrct": true
+        },
+        {
+          "id": 4,
+          "text": "fffffff",
+          "isCorrct": false
+        }
+      ]
     }
   ]
 }
