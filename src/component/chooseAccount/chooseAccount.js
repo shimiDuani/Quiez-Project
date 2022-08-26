@@ -20,11 +20,13 @@ const ChooseAccount = () => {
     });
   }, []);
 
-  const goToAccount = () => {
+  const goToAccount = (account) => {
     console.log(account);
     navigate("/" + account); //send account.id
   };
-
+  // const goToImage = (id) => {
+  //   navigate("/gallery/" + id);
+  // };
   const handleChange = (event) => {
     setAccount(event.target.value);
   };
@@ -35,10 +37,10 @@ const ChooseAccount = () => {
         text={"Choose Account:"}
         options={accounts}
         onChange={handleChange}
-        value={account}
+        //  value={account}
       />
       <div className="submit">
-        <Button onClick={goToAccount}>Submit</Button>
+        <Button onClick={() => goToAccount(account)}>Submit</Button>
       </div>
     </div>
   );

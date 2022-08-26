@@ -6,42 +6,57 @@ import ServiceAccount from "../../service/serviceAccount";
 import "./mainMenu.scss";
 
 const MainMenu = () => {
-  const params = useParams();
   let service = new ServiceAccount();
+  const params = useParams();
   const navigate = useNavigate();
+
+  const [account, setAccount] = useState("");
   const [topics, setTopics] = useState([]);
-  const [account, setAccount] = useState([]);
 
   useEffect(() => {
     service.getById(params.id).then((data) => setAccount(data));
-    setTopics(account.topics);
-    console.log(topics);
+    setTopics(account.topicsId);
+    console.log(account);
+    // setTopics(account.topics);
+    // console.log(topics);
   }, [params.id]);
 
   const handleChange = (event) => {
-    setTopics(event.target.value);
+    setAccount(event.target.value);
   };
-  const goToQuestion = () => {
+
+  const goToQuestions = () => {
     navigate("/Question");
   };
-  // const goToTest = () => {
-  //   navigate("/" + params.id);
-  // };
+
+  const goToTests = () => {
+    navigate("/Tests");
+  };
   // const goToReports = () => {
   //   navigate("/" + params.id);
   // };
   return (
     <div className="container">
       <h1>Main Menu</h1>
+      {/* <label>
+        Choose a topic
+        <select value={topics}>
+          {account &&
+            account.topicsId.map((topic) => (
+              <option value={topic}>{topic}</option>
+            ))}
+        </select>
+      </label> */}
       {/* <DropDown
         text={"choose a field of study: "}
         onChange={handleChange}
-        option={topics}
-        value={topics[0]}
+        option={account && account.topicsId}
+        // value={account.topicsId[0]}
       /> */}
       <div className="links">
-        <a onClick={goToQuestion}>Manage Question</a>
-        <a>Manage Tests</a>
+        {account && account.topicsId}-{params.id}
+        <a onClick={goToQuestions}>Manage Question</a>
+        <a onClick={goToTests}>Manage Tests</a>
         <a>Reports</a>
       </div>
 

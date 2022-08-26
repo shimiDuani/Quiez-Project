@@ -3,45 +3,135 @@
     {
       "id": 1,
       "name": "ben gurion",
-      "topics": ["English", "Matematic", "Biolegi"]
+      "topicsId": 1
     },
     {
       "id": 2,
       "name": "tel aviv",
-      "topics": ["English", "Matematic", "Biolegi"]
+      "topicsId": 2
+    }
+  ],
+  "Topic": [
+    {
+      "id": 1,
+      "name": "capital Cities",
+      "test": [1, 2],
+      "question": []
+    },
+    {
+      "id": 2,
+      "name": "",
+      "test": [],
+      "question": []
+    },
+    {
+      "id": 3,
+      "name": "",
+      "test": [],
+      "question": []
+    },
+    {
+      "id": 4,
+      "name": "",
+      "test": [],
+      "question": []
+    },
+    {
+      "id": 5,
+      "name": "",
+      "test": [],
+      "question": []
+    },
+    {
+      "id": 6,
+      "name": "",
+      "test": [],
+      "question": []
     }
   ],
 
   "Question": [
     {
       "id": 1,
-      "text": "What is a ",
-      "tag": "JavaScript| Advanced",
+      "text": "What the city capital in Israel?",
+      "tag": "Capital cities",
       "type": "Single",
       "language": "English",
       "isActivate": false,
       "Answers": [
         {
           "id": 1,
-          "text": "dddddddddd",
+          "text": "Tel-Aviv",
           "isCorrct": false
         },
         {
           "id": 2,
-          "text": "fffffffffff",
+          "text": "Rishon-Lezion",
           "isCorrct": false
         },
         {
           "id": 3,
-          "text": "asdas",
+          "text": "Jerusalem",
           "isCorrct": true
         },
         {
           "id": 4,
-          "text": "fffffff",
+          "text": "Zfat",
           "isCorrct": false
         }
       ]
+    },
+    {
+      "id": 2,
+      "text": "What the city capital in Germany?",
+      "tag": "Capital cities",
+      "type": "Single",
+      "language": "English",
+      "isActivate": false,
+      "Answers": [
+        {
+          "id": 1,
+          "text": "Berlin",
+          "isCorrct": true
+        },
+        {
+          "id": 2,
+          "text": "Minech",
+          "isCorrct": false
+        },
+        {
+          "id": 3,
+          "text": "Dortmund",
+          "isCorrct": false
+        },
+        {
+          "id": 4,
+          "text": "Frankfurt",
+          "isCorrct": false
+        }
+      ]
+    }
+  ],
+  "Tests": [
+    {
+      "id": 1,
+      "name": "new test",
+      "tag": "JavaScript",
+      "Date": "1.1.2022",
+      "question": "",
+      "language": "English",
+      "passingGrade": 60,
+      "finishTest": ""
+    }
+  ],
+  "FinishTest": [
+    {
+      "id": 1,
+      "doneTest": "",
+      "question": [],
+      "answer": [],
+      "grade": 78,
+      "isPassed": true
     }
   ]
 }
