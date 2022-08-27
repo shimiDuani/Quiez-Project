@@ -10,19 +10,25 @@ const MainMenu = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [account, setAccount] = useState("");
-  const [topics, setTopics] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [account, setAccount] = useState(null);
+  const [topic, setTopic] = useState(null);
 
   useEffect(() => {
     service.getById(params.id).then((data) => setAccount(data));
-    setTopics(account.topicsId);
     console.log(account);
-    // setTopics(account.topics);
-    // console.log(topics);
+    setTimeout(() => {
+      setIsLoading(false);
+      setTopic(account.topicsId[0]);
+    }, 3000);
   }, [params.id]);
 
+  if (isLoading) {
+    return <h3>is Loading....</h3>;
+  }
+
   const handleChange = (event) => {
-    setAccount(event.target.value);
+    setTopic(event.target.value);
   };
 
   const goToQuestions = () => {
@@ -32,29 +38,19 @@ const MainMenu = () => {
   const goToTests = () => {
     navigate("/Tests");
   };
-  // const goToReports = () => {
-  //   navigate("/" + params.id);
-  // };
+
   return (
     <div className="container">
-      <h1>Main Menu</h1>
-      {/* <label>
+      <h1>Main Menu - {account.name}</h1>
+      <label>
         Choose a topic
-        <select value={topics}>
-          {account &&
-            account.topicsId.map((topic) => (
-              <option value={topic}>{topic}</option>
-            ))}
+        <select onChange={handleChange} value={topic}>
+          {account.topicsId.map((topic) => (
+            <option value={topic}>{topic}</option>
+          ))}
         </select>
-      </label> */}
-      {/* <DropDown
-        text={"choose a field of study: "}
-        onChange={handleChange}
-        option={account && account.topicsId}
-        // value={account.topicsId[0]}
-      /> */}
+      </label>
       <div className="links">
-        {account && account.topicsId}-{params.id}
         <a onClick={goToQuestions}>Manage Question</a>
         <a onClick={goToTests}>Manage Tests</a>
         <a>Reports</a>

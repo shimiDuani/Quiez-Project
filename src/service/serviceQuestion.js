@@ -20,10 +20,10 @@ class ServiceQuestion {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, movie) {
+  put(id, question) {
     return fetch("http://localhost:3030/Question/" + id, {
       method: "PUT",
-      body: JSON.stringify(movie),
+      body: JSON.stringify(question),
       headers: {
         "Content-Type": "application/json",
       },

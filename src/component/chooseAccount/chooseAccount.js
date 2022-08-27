@@ -24,6 +24,7 @@ const ChooseAccount = () => {
     console.log(account);
     navigate("/" + account); //send account.id
   };
+
   // const goToImage = (id) => {
   //   navigate("/gallery/" + id);
   // };

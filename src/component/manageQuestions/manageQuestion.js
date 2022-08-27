@@ -1,45 +1,99 @@
 import ServiceQuestion from "../../service/serviceQuestion";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 
 const ManageQuestion = () => {
+  const navigate = useNavigate();
   let service = new ServiceQuestion();
-
+  const ref = useRef();
+  const [isLoading, setIsLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     service.get().then((questions) => {
       setQuestions(questions);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
       console.log(questions);
     });
   }, []);
+
+  if (isLoading) {
+    return <h3>is Loading....</h3>;
+  }
+
+  const theFilterSearch = () => {
+    let searchQuestion = [];
+    questions.map((item) => {
+      if (query === "") {
+        return item;
+      } else if (item.tag.toLowerCase().includes(query.toLowerCase())) {
+        console.log(item);
+        searchQuestion.push(item);
+        return item;
+      }
+    });
+    setQuestions(searchQuestion);
+  };
+
+  const createQuestion = () => {
+    navigate("/createQuestion");
+  };
+  const editQuestion = (id) => {
+    navigate("/editQuestion/" + id);
+  };
+
   return (
-    // <div>
-    //   <div>
-    //     <span>
-    //       <label>Filter by tags or content:</label>
-    //       <input type="text" />
-    //     </span>
-    //   </div>
     <div>
-      {questions.map((item, i) => {
+      <h1>Available Question For</h1>
+      <div>
+        <span>
+          <label>Filter by tags or content:</label>
+          <input
+            ref={ref}
+            placeholder="Question Search"
+            onChange={(e) => setQuery(e.target.value)}
+            className="search"
+          />
+          <button onClick={theFilterSearch}>search</button>
+        </span>
+      </div>
+      <div>
         <table>
-          <tr key={i} value={item}>
-            <th>ID:</th>
-            <th>Text:</th>
-            <th>Tag</th>
-            <th>Type</th>
-            <th>language</th>
-          </tr>
-          <tr>
-            <td>{item.id}</td>
-            <td>{item.text}</td>
-            <td>{item.tag}</td>
-            <td>{item.type}</td>
-            <td>{item.language}</td>
-          </tr>
-        </table>;
-        debugger;
-      })}
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Question Text and Tags</th>
+              <th>Last Update</th>
+              <th>Question Type</th>
+              <th># of Tests</th>
+              <th></th>
+            </tr>
+          </thead>
+          {questions.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>
+                {item.text}
+                <br />
+                {item.tag}
+              </td>
+              <td>Last Update</td>
+              <td>{item.type}</td>
+              <td>number</td>
+              <td>
+                <button>Show</button>
+                <button onClick={() => editQuestion(item.id)}>Edit</button>
+                <button>Duplicate</button>
+                <button>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </table>
+      </div>
+      <button onClick={() => createQuestion()}>create</button>
     </div>
   );
 };

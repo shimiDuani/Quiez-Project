@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "ben gurion",
-      "topicsId": 1
+      "topicsId": [1, 2]
     },
     {
       "id": 2,
       "name": "tel aviv",
-      "topicsId": 2
+      "topicsId": [1, 2, 3]
     }
   ],
   "Topic": [
@@ -54,6 +54,7 @@
     {
       "id": 1,
       "text": "What the city capital in Israel?",
+      "inputBelowQuestion": "",
       "tag": "Capital cities",
       "type": "Single",
       "language": "English",
@@ -84,6 +85,7 @@
     {
       "id": 2,
       "text": "What the city capital in Germany?",
+      "inputBelowQuestion": "",
       "tag": "Capital cities",
       "type": "Single",
       "language": "English",
