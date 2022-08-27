@@ -117,14 +117,25 @@
   "Tests": [
     {
       "id": 1,
-      "name": "new test",
+      "name": "Test 1",
       "tag": "JavaScript",
-      "Date": "1.1.2022",
-      "question": "",
+      "Date": "6.7.2022",
+      "questionId": 2,
+      "language": "English",
+      "passingGrade": 60,
+      "finishTest": ""
+    },
+    {
+      "id": 2,
+      "name": "Test 2",
+      "tag": "Node.js",
+      "Date": "1.8.2021",
+      "questionId": 1,
       "language": "English",
       "passingGrade": 60,
       "finishTest": ""
     }
+
   ],
   "FinishTest": [
     {
