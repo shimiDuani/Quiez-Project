@@ -13,10 +13,7 @@ const ManageQuestion = () => {
   useEffect(() => {
     service.get().then((questions) => {
       setQuestions(questions);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
-      console.log(questions);
+      setIsLoading(false);
     });
   }, []);
 
@@ -29,7 +26,7 @@ const ManageQuestion = () => {
     questions.map((item) => {
       if (query === "") {
         return item;
-      } else if (item.tag.toLowerCase().includes(query.toLowerCase())) {
+      } else if (item.text.toLowerCase().includes(query.toLowerCase())) {
         console.log(item);
         searchQuestion.push(item);
         return item;
@@ -43,6 +40,10 @@ const ManageQuestion = () => {
   };
   const editQuestion = (id) => {
     navigate("/editQuestion/" + id);
+    debugger;
+  };
+  const showQuestion = (id) => {
+    navigate("/showQuestion/" + id);
   };
 
   return (
@@ -84,7 +85,7 @@ const ManageQuestion = () => {
               <td>{item.type}</td>
               <td>number</td>
               <td>
-                <button>Show</button>
+                <button onClick={() => showQuestion(item.id)}>Show</button>
                 <button onClick={() => editQuestion(item.id)}>Edit</button>
                 <button>Duplicate</button>
                 <button>Delete</button>

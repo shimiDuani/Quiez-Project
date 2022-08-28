@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ServiceQuestion from "../../../service/serviceQuestion";
 
-const editQuestion = () => {
+const EditQuestion = () => {
   let params = useParams();
   let service = new ServiceQuestion();
 
@@ -23,7 +23,6 @@ const editQuestion = () => {
   useEffect(() => {
     service.getById(params.id).then((data) => setQuestion(data));
     debugger;
-    console.log(data);
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
@@ -31,7 +30,6 @@ const editQuestion = () => {
 
   const updateQuestion = () => {
     const questionBefore = {
-      id: questions[questions.length - 1].id + 1,
       text: inputText.current.value,
       belowText: inputBelowQuestion.current.value,
       tag: inputTag.current.value,
@@ -57,8 +55,9 @@ const editQuestion = () => {
 
   return (
     <div>
+      <h1>edit</h1>
       <p>
-        <label>Text Of Movie: </label>
+        <label>Text Of Question: </label>
         <input
           type="text"
           minLength={2}
@@ -81,4 +80,4 @@ const editQuestion = () => {
     </div>
   );
 };
-export default editQuestion;
+export default EditQuestion;

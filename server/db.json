@@ -63,22 +63,22 @@
         {
           "id": 1,
           "text": "Tel-Aviv",
-          "isCorrct": false
+          "isCorrect": false
         },
         {
           "id": 2,
           "text": "Rishon-Lezion",
-          "isCorrct": false
+          "isCorrect": false
         },
         {
           "id": 3,
           "text": "Jerusalem",
-          "isCorrct": true
+          "isCorrect": true
         },
         {
           "id": 4,
           "text": "Zfat",
-          "isCorrct": false
+          "isCorrect": false
         }
       ]
     },
@@ -94,22 +94,22 @@
         {
           "id": 1,
           "text": "Berlin",
-          "isCorrct": true
+          "isCorrect": true
         },
         {
           "id": 2,
           "text": "Minech",
-          "isCorrct": false
+          "isCorrect": false
         },
         {
           "id": 3,
           "text": "Dortmund",
-          "isCorrct": false
+          "isCorrect": false
         },
         {
           "id": 4,
           "text": "Frankfurt",
-          "isCorrct": false
+          "isCorrect": false
         }
       ]
     }

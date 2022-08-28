@@ -15,12 +15,11 @@ const MainMenu = () => {
   const [topic, setTopic] = useState(null);
 
   useEffect(() => {
-    service.getById(params.id).then((data) => setAccount(data));
-    console.log(account);
-    setTimeout(() => {
+    service.getById(params.id).then((data) => {
+      setAccount(data);
+      setTopic(data.topicsId[0]);
       setIsLoading(false);
-      setTopic(account.topicsId[0]);
-    }, 3000);
+    });
   }, [params.id]);
 
   if (isLoading) {
