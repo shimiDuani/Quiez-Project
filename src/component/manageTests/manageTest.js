@@ -13,10 +13,9 @@ const ManageTest = () => {
 
     useEffect(() => {
         service.get().then((tests) => {
-            setTests(tests);
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 3000);
+            setTests(tests);         
+            setIsLoading(false);
+           
             console.log(tests);
         });
     }, []);
@@ -25,9 +24,46 @@ const ManageTest = () => {
         return <h3>is Loading....</h3>;
     }
 
+    const theFilterSearch = () => {
+        let searchTest = [];
+        tests.map((item) => {
+          if (query === "") {
+            return item;
+          } else if (item.tag.toLowerCase().includes(query.toLowerCase())) {
+            console.log(item);
+            searchTest.push(item);
+            return item;
+          }
+        });
+        setTests(searchTest);
+      };
+
+      const createTest = () => {
+        navigate("/createTest");
+      };
+      const editTest = (id) => {
+        navigate("/editTest/" + id);
+        debugger;
+      };
+      const showTest = (id) => {
+        navigate("/showTest/" + id);
+      };
+
     return (
         <div>
             <h1>Manage Tests</h1>
+            <div>
+        <span>
+          <label>Filter by tags or content:</label>
+          <input
+            ref={ref}
+            placeholder="Test Search"
+            onChange={(e) => setQuery(e.target.value)}
+            className="search"
+          />
+          <button onClick={theFilterSearch}>search</button>
+        </span>
+      </div>
             
             <div>
         <table>
@@ -53,8 +89,8 @@ const ManageTest = () => {
               <td>{item.language}</td>
               <td>{item.passingGrade}</td>
               <td>
-                <button>Show</button>
-                <button>Edit</button>
+                <button onClick={() => showTest(item.id)} >Show</button>
+                <button onClick={() => editTest(item.id)} >Edit</button>
                 <button>Duplicate</button>
                 <button>Delete</button>
               </td>
@@ -62,6 +98,7 @@ const ManageTest = () => {
           ))}
         </table>
       </div>
+      <button onClick={() => createTest()}>create</button>
         </div>
     )
 };
