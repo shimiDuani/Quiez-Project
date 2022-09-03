@@ -1,6 +1,7 @@
 import ServiceQuestion from "../../service/serviceQuestion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import "./manageQuestion.scss";
 
 const ManageQuestion = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const ManageQuestion = () => {
     service.get().then((questions) => {
       setQuestions(questions);
       setIsLoading(false);
+      console.log(questions);
     });
   }, []);
 
@@ -35,20 +37,30 @@ const ManageQuestion = () => {
     setQuestions(searchQuestion);
   };
 
+  const deleteQuestion = (id) => {
+    service.delete(id).then(() => {
+      let allQuestions = [...questions];
+      allQuestions = questions.filter((question) => question.id !== id);
+      setQuestions(allQuestions);
+    });
+  };
+
   const createQuestion = () => {
     navigate("/createQuestion");
   };
   const editQuestion = (id) => {
     navigate("/editQuestion/" + id);
-    debugger;
   };
   const showQuestion = (id) => {
     navigate("/showQuestion/" + id);
   };
+  const back = () => {
+    navigate("/:id");
+  };
 
   return (
     <div>
-      <h1>Available Question For</h1>
+      <h1>Available Question For </h1>
       <div>
         <span>
           <label>Filter by tags or content:</label>
@@ -62,7 +74,7 @@ const ManageQuestion = () => {
         </span>
       </div>
       <div>
-        <table>
+        <table class="styled-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -73,8 +85,8 @@ const ManageQuestion = () => {
               <th></th>
             </tr>
           </thead>
-          {questions.map((item) => (
-            <tr key={item.id}>
+          {questions.map((item, index) => (
+            <tr key={index}>
               <td>{item.id}</td>
               <td>
                 {item.text}
@@ -84,17 +96,18 @@ const ManageQuestion = () => {
               <td>Last Update</td>
               <td>{item.type}</td>
               <td>number</td>
-              <td>
+              <td class="active-row">
                 <button onClick={() => showQuestion(item.id)}>Show</button>
                 <button onClick={() => editQuestion(item.id)}>Edit</button>
-                <button>Duplicate</button>
-                <button>Delete</button>
+                <button onClick={() => deleteQuestion(item.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </table>
       </div>
-      <button onClick={() => createQuestion()}>create</button>
+      <button className="btnEnd" onClick={() => createQuestion()}>
+        create
+      </button>
     </div>
   );
 };

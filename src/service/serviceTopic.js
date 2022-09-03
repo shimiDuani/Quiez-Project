@@ -1,18 +1,18 @@
-class ServiceAccount {
+class ServiceTopic {
   get() {
-    return fetch("http://localhost:3030/account")
+    return fetch("http://localhost:3030/Topic")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/account/" + id)
+    return fetch("http://localhost:3030/Topic/" + id)
       .then(this.success)
       .catch(this.failure);
   }
-  post(account) {
-    return fetch("http://localhost:3030/account/", {
+  post(topic) {
+    return fetch("http://localhost:3030/Topic/", {
       method: "POST",
-      body: JSON.stringify(account),
+      body: JSON.stringify(topic),
       headers: {
         "Content-Type": "application/json",
       },
@@ -20,10 +20,10 @@ class ServiceAccount {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, account) {
-    return fetch("http://localhost:3030/account/" + id, {
+  put(id, topic) {
+    return fetch("http://localhost:3030/Topic/" + id, {
       method: "PUT",
-      body: JSON.stringify(account),
+      body: JSON.stringify(topic),
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,7 @@ class ServiceAccount {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/account/" + id, {
+    return fetch("http://localhost:3030/Topic/" + id, {
       method: "DELETE",
     })
       .then(this.success)
@@ -51,5 +51,4 @@ class ServiceAccount {
     console.log(error);
   }
 }
-export default ServiceAccount;
-//http://localhost:4000/api/Questions/getQuestions
+export default ServiceTopic;

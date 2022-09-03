@@ -1,13 +1,18 @@
+import { text } from "@fortawesome/fontawesome-svg-core";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ServiceQuestion from "../../../service/serviceQuestion";
 
 const EditQuestion = () => {
   let params = useParams();
   let service = new ServiceQuestion();
 
+  const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState("");
+  const [updateLastQuestion, setUpdateLastQuestion] = useState("");
 
   const inputType = useRef("");
   const inputText = useRef("");
@@ -15,38 +20,57 @@ const EditQuestion = () => {
   const inputTag = useRef("");
   const inputLanguage = useRef("");
   const inputIsActivate = useRef("");
-  const inputAnswer1 = useRef("");
-  const inputAnswer2 = useRef("");
-  const inputAnswer3 = useRef("");
-  const inputAnswer4 = useRef("");
 
   useEffect(() => {
-    service.getById(params.id).then((data) => setQuestion(data));
-    debugger;
-    setTimeout(() => {
+    service.getById(params.id).then((data) => {
+      setQuestion(data[0]);
+      setAnswers(data[0].Answers);
       setIsLoading(false);
-    }, 3000);
+    });
   }, [params.id]);
+
+  const back = () => {
+    navigate("/Questions");
+  };
 
   const updateQuestion = () => {
     const questionBefore = {
+      id: question.id,
       text: inputText.current.value,
-      belowText: inputBelowQuestion.current.value,
+      textBelowQuestion: inputBelowQuestion.current.value,
       tag: inputTag.current.value,
       type: inputType.current.value,
       language: inputLanguage.current.value,
-      isActivate: inputIsActivate.current.value,
-      answers: [
-        {
-          answer1: inputAnswer1.current.value,
-          answer2: inputAnswer2.current.value,
-          answer3: inputAnswer3.current.value,
-          answer4: inputAnswer4.current.value,
-        },
-      ],
+      isActivate: question.isActivate,
+      lastUpdate: question.lastUpdate,
+      Answers: answers,
     };
+
     setQuestion(questionBefore);
+    setUpdateLastQuestion(new Date().toLocaleDateString());
+    console.log(updateLastQuestion);
     service.put(questionBefore.id, questionBefore);
+  };
+
+  const updateInputAnswers = (e, index) => {
+    console.log(e.target);
+    const answerText = e.target.value;
+    answers[index].text = answerText;
+    console.log(answers[index]);
+    setAnswers(answers);
+  };
+
+  const updateRadioAnswers = (e, index) => {
+    console.log(e.target);
+    const answerRadio = e.target.checked;
+    answers.map((answer) => {
+      answer.isCorrect = false;
+    });
+    if (answerRadio) {
+      answers[index].isCorrect = true;
+    }
+    console.log(answers[index]);
+    setAnswers(answers);
   };
 
   if (isLoading) {
@@ -55,7 +79,7 @@ const EditQuestion = () => {
 
   return (
     <div>
-      <h1>edit</h1>
+      <h1>Edit Question #{question.id}</h1>
       <p>
         <label>Text Of Question: </label>
         <input
@@ -75,7 +99,50 @@ const EditQuestion = () => {
         <label>below Text of question:</label>
         <input defaultValue={question.belowText} ref={inputBelowQuestion} />
       </p>
-
+      <p>
+        <label>type of question:</label>
+        <input defaultValue={question.type} ref={inputType} />
+      </p>
+      <p>
+        <label>language of question:</label>
+        <input defaultValue={question.language} ref={inputLanguage} />
+      </p>
+      {answers.map((answer) => {
+        return answer.isCorrect ? (
+          <p key={answer.id}>
+            <label>Answer - {answer.id} </label>
+            <input
+              type="text"
+              defaultValue={answer.text}
+              onChange={(e) => updateInputAnswers(e, answer.id - 1)}
+            />
+            <input
+              name="InCorrect"
+              type="radio"
+              defaultValue={answer.isCorrect}
+              checked
+              value="correct"
+              onChange={(e) => updateRadioAnswers(e, answer.id - 1)}
+            />
+          </p>
+        ) : (
+          <p key={answer.id}>
+            <label>Answer - {answer.id} </label>
+            <input
+              type="text"
+              defaultValue={answer.text}
+              onChange={(e) => updateInputAnswers(e, answer.id - 1)}
+            />
+            <input
+              name="InCorrect"
+              type="radio"
+              defaultChecked={answer.isCorrect}
+              onChange={(e) => updateRadioAnswers(e, answer.id - 1)}
+            />
+          </p>
+        );
+      })}
+      <button onClick={() => back()}>Back</button>
       <input type="submit" value="update" onClick={updateQuestion} />
     </div>
   );

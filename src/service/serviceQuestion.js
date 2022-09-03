@@ -1,18 +1,18 @@
 class ServiceQuestion {
   get() {
-    return fetch("http://localhost:3030/Question")
+    return fetch("http://localhost:4000/api/Questions/getQuestions")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/Question/" + id)
+    return fetch("http://localhost:4000/api/Questions/" + id)
       .then(this.success)
       .catch(this.failure);
   }
-  post(gallery) {
-    return fetch("http://localhost:3030/Question/", {
+  post(question) {
+    return fetch("http://localhost:4000/api/Questions/addQuestion", {
       method: "POST",
-      body: JSON.stringify(gallery),
+      body: JSON.stringify(question),
       headers: {
         "Content-Type": "application/json",
       },
@@ -21,7 +21,7 @@ class ServiceQuestion {
       .catch(this.failure);
   }
   put(id, question) {
-    return fetch("http://localhost:3030/Question/" + id, {
+    return fetch("http://localhost:4000/api/Questions/updateQuestion/" + id, {
       method: "PUT",
       body: JSON.stringify(question),
       headers: {
@@ -32,7 +32,7 @@ class ServiceQuestion {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/" + id, {
+    return fetch("http://localhost:4000/api/Questions/deleteQuestion/" + id, {
       method: "DELETE",
     })
       .then(this.success)

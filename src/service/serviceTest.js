@@ -9,10 +9,10 @@ class ServiceTest {
       .then(this.success)
       .catch(this.failure);
   }
-  post(gallery) {
+  post(test) {
     return fetch("http://localhost:3030/Tests/", {
       method: "POST",
-      body: JSON.stringify(gallery),
+      body: JSON.stringify(test),
       headers: {
         "Content-Type": "application/json",
       },

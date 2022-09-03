@@ -1,0 +1,10 @@
+.page {
+  display: grid;
+  justify-content: space-around;
+  justify-items: start;
+  .info {
+    margin-top: 20px;
+    border-top-style: solid;
+    border-top-color: chocolate;
+  }
+}

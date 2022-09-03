@@ -1,0 +1,10 @@
+.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 180px;
+  .btn {
+    margin-top: 10px;
+  }
+}

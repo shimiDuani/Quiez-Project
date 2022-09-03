@@ -1,43 +1,83 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ServiceQuestion from "../../../service/serviceQuestion";
+import "./showQuestion.scss";
 const ShowQuestion = () => {
+  const service = new ServiceQuestion();
+
+  const [isVertical, setIsVertical] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [question, setQuestion] = useState(null);
 
-  const service = new ServiceQuestion();
+  const navigate = useNavigate();
+
   let params = useParams();
   useEffect(() => {
     service.getById(params.id).then((data) => {
-      setQuestion(data);
-      setAnswers(data.Answers);
+      setQuestion(data[0]);
+      setAnswers(data[0].Answers);
       setIsLoading(false);
+      console.log(data);
+      console.log(data.Answers);
     });
-    console.log(answers);
   }, [params.id]);
 
   if (isLoading) {
     return <h3>is Loading....</h3>;
   }
 
+  const back = () => {
+    navigate("/Questions/");
+  };
+
+  const handleClick = () => {
+    setIsVertical((current) => !current);
+  };
+
   return (
-    <div className="container">
+    <div className="show">
       <h1>Question #{question.id}</h1>
       <p style={{ fontWeight: "bold" }}>{question.text}</p>
-      {answers.map((answer) => {
-        return answer.isCorrect ? (
-          <div key={answer.id}>
-            <p style={{ color: "green", fontWeight: "bold" }}>
-              {answer.text}- {(answer.isCorrect = "is correct")}
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p>{answer.text}</p>
-          </div>
-        );
-      })}
+      <div>
+        {answers.map((answer) => {
+          return answer.isCorrect ? (
+            <div
+              style={{
+                display: isVertical ? "block" : "inline-block",
+                padding: 10,
+              }}
+              key={answer.id}
+            >
+              <p
+                style={{
+                  color: "green",
+                  fontWeight: "bold",
+                }}
+              >
+                ({answer.id}) {answer.text} -{" "}
+                {(answer.isCorrect = "is correct")}
+              </p>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: isVertical ? "block" : "inline-block",
+                padding: 10,
+              }}
+            >
+              <p>
+                ({answer.id}) {answer.text}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      <button onClick={handleClick}>change layout</button>
+      <button className="btn" onClick={back}>
+        Back
+      </button>
     </div>
   );
 };

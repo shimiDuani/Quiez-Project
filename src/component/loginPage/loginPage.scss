@@ -1,0 +1,17 @@
+.app {
+  display: grid;
+  justify-content: space-around;
+  justify-items: start;
+  margin-top: 200px;
+  .title {
+    font-size: x-large;
+    border-bottom-color: chocolate;
+    border-bottom-style: solid;
+  }
+  .login {
+    margin-top: 10px;
+  }
+  .onSuccess {
+    font-size: larger;
+  }
+}
