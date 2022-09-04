@@ -20,8 +20,8 @@ class ServiceQuestion {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, question) {
-    return fetch("http://localhost:4000/api/Questions/updateQuestion/" + id, {
+  put(question) {
+    return fetch("http://localhost:4000/api/Questions/updateQuestion", {
       method: "PUT",
       body: JSON.stringify(question),
       headers: {

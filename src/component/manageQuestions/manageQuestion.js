@@ -1,25 +1,33 @@
 import ServiceQuestion from "../../service/serviceQuestion";
-import { useNavigate } from "react-router-dom";
+import ServiceTopic from "../../service/serviceTopic";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import "./manageQuestion.scss";
 
 const ManageQuestion = () => {
   const navigate = useNavigate();
   let service = new ServiceQuestion();
+  let serviceTopic = new ServiceTopic();
+  const params = useParams();
   const ref = useRef();
   const [isLoading, setIsLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
-  const [query, setQuery] = useState("");
+  const [topic, setTopic] = useState(null);
+  const [query, setQuery] = useState(null);
 
   useEffect(() => {
+    serviceTopic.getById(params.id).then((data) => {
+      setTopic(data);
+      console.log("topic", data);
+    });
     service.get().then((questions) => {
       setQuestions(questions);
       setIsLoading(false);
       console.log(questions);
     });
-  }, []);
+  }, [params.id]);
 
-  if (isLoading) {
+  if (!topic || isLoading) {
     return <h3>is Loading....</h3>;
   }
 
@@ -46,21 +54,21 @@ const ManageQuestion = () => {
   };
 
   const createQuestion = () => {
-    navigate("/createQuestion");
+    navigate("/createQuestion/" + topic.id);
   };
   const editQuestion = (id) => {
-    navigate("/editQuestion/" + id);
+    navigate("/editQuestion/" + topic.id + "/" + id);
   };
   const showQuestion = (id) => {
-    navigate("/showQuestion/" + id);
+    navigate("/showQuestion/" + topic.id + "/" + id);
   };
   const back = () => {
-    navigate("/:id");
+    navigate("/mainMenu/" + params.id);
   };
 
   return (
     <div>
-      <h1>Available Question For </h1>
+      <h1>Available Question For : {topic.name}</h1>
       <div>
         <span>
           <label>Filter by tags or content:</label>
@@ -85,24 +93,28 @@ const ManageQuestion = () => {
               <th></th>
             </tr>
           </thead>
-          {questions.map((item, index) => (
-            <tr key={index}>
-              <td>{item.id}</td>
-              <td>
-                {item.text}
-                <br />
-                {item.tag}
-              </td>
-              <td>Last Update</td>
-              <td>{item.type}</td>
-              <td>number</td>
-              <td class="active-row">
-                <button onClick={() => showQuestion(item.id)}>Show</button>
-                <button onClick={() => editQuestion(item.id)}>Edit</button>
-                <button onClick={() => deleteQuestion(item.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
+          {questions
+            .filter((question) => topic.questionId.includes(question.id))
+            .map((item, index) => (
+              <tr key={index}>
+                <td>{item.id}</td>
+                <td>
+                  {item.text}
+                  <br />
+                  {item.tag}
+                </td>
+                <td>{new Date(item.lastUpdate).toLocaleDateString()}</td>
+                <td>{item.type}</td>
+                <td>number</td>
+                <td class="active-row">
+                  <button onClick={() => showQuestion(item.id)}>Show</button>
+                  <button onClick={() => editQuestion(item.id)}>Edit</button>
+                  <button onClick={() => deleteQuestion(item.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
         </table>
       </div>
       <button className="btnEnd" onClick={() => createQuestion()}>

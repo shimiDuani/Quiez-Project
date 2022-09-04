@@ -19,12 +19,12 @@ const MainMenu = () => {
   useEffect(() => {
     serviceAccount.getById(params.id).then((data) => {
       setAccount(data);
-      console.log("account", account);
-    });
-    serviceTopic.get().then((data) => {
-      console.log("data", data);
-      setTopics(data);
-      setIsLoading(false);
+      console.log("account", data);
+      serviceTopic.get().then((data) => {
+        console.log("topics", data);
+        setTopics(data);
+        setIsLoading(false);
+      });
     });
   }, [params.id]);
 
@@ -32,7 +32,6 @@ const MainMenu = () => {
     return <h3>is Loading....</h3>;
   }
   const handleChange = (event) => {
-    debugger;
     setTopic(event.target.value);
   };
 
@@ -42,7 +41,7 @@ const MainMenu = () => {
         topics.filter((topic) => account.topicsId.includes(topic.id))[0]
       );
     }
-    navigate("/Questions");
+    navigate("/Questions/" + topic.id);
   };
 
   const goToTests = () => {

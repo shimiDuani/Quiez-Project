@@ -1,16 +1,16 @@
 class ServiceAdmin {
   get() {
-    return fetch("http://localhost:3030/admin")
+    return fetch("http://localhost:4000/api/Admins/getAdmins")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/admin/" + id)
+    return fetch("http://localhost:4000/api/Admins/" + id)
       .then(this.success)
       .catch(this.failure);
   }
   post(admin) {
-    return fetch("http://localhost:3030/admin/", {
+    return fetch("http://localhost:4000/api/Admins/addAdmin", {
       method: "POST",
       body: JSON.stringify(admin),
       headers: {
@@ -20,8 +20,8 @@ class ServiceAdmin {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, admin) {
-    return fetch("http://localhost:3030/admin/" + id, {
+  put(admin) {
+    return fetch("http://localhost:4000/api/Admins/updateAdmin", {
       method: "PUT",
       body: JSON.stringify(admin),
       headers: {
@@ -32,7 +32,7 @@ class ServiceAdmin {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/admin/" + id, {
+    return fetch("http://localhost:4000/api/Admins/deleteAdmin" + id, {
       method: "DELETE",
     })
       .then(this.success)

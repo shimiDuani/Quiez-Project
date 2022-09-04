@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import ServiceQuestion from "../../../service/serviceQuestion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateQuestion = () => {
   let service = new ServiceQuestion();
   const navigate = useNavigate();
+  const params = useParams();
   const [questions, setQuestions] = useState([]);
   const [newQeustion, setNewQuestion] = useState("");
   const [answers, setAnswers] = useState([
@@ -27,7 +28,7 @@ const CreateQuestion = () => {
   }, []);
 
   const back = () => {
-    navigate("/Questions");
+    navigate("/Questions/" + params.id);
   };
 
   const clickHandle = () => {

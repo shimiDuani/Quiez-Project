@@ -24,16 +24,20 @@ const ChooseAccount = () => {
       setAdmin(data);
       console.log("admin1", admin);
       //tempData=data;
+      serviceAccount.get().then((accounts) => {
+        // debugger
+        // accounts.filter((account) => !admin.accountId.includes(account.id));
+        console.log("accounts", accounts);
+        setAccounts(accounts);
+        setAccount(accounts[0].id);
+        setIsLoading(false);
+      });
     });
-    serviceAccount.get().then((accounts) => {
-      // debugger
-      // accounts.filter((account) => !admin.accountId.includes(account.id));
-      console.log("accounts", accounts);
-      setAccounts(accounts);
-      setAccount(accounts[0].id);
-      setIsLoading(false);
-    });
-  }, []);
+  }, [params.id]);
+
+  if (!admin) {
+    return <h3>is Loading....</h3>;
+  }
   if (isLoading) {
     return <h3>is Loading....</h3>;
   }

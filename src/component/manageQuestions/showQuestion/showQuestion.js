@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ServiceQuestion from "../../../service/serviceQuestion";
+import ServiceTopic from "../../../service/serviceTopic";
 import "./showQuestion.scss";
 const ShowQuestion = () => {
   const service = new ServiceQuestion();
@@ -13,23 +14,24 @@ const ShowQuestion = () => {
 
   const navigate = useNavigate();
 
-  let params = useParams();
+  const { topic, id } = useParams();
+
   useEffect(() => {
-    service.getById(params.id).then((data) => {
+    service.getById(id).then((data) => {
       setQuestion(data[0]);
       setAnswers(data[0].Answers);
       setIsLoading(false);
       console.log(data);
       console.log(data.Answers);
     });
-  }, [params.id]);
+  }, [id]);
 
   if (isLoading) {
     return <h3>is Loading....</h3>;
   }
 
   const back = () => {
-    navigate("/Questions/");
+    navigate("/Questions/" + topic);
   };
 
   const handleClick = () => {

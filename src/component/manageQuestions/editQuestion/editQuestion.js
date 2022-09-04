@@ -3,13 +3,16 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ServiceQuestion from "../../../service/serviceQuestion";
+import ServiceTopic from "../../../service/serviceTopic";
 
 const EditQuestion = () => {
-  let params = useParams();
+  const { topic, id } = useParams();
   let service = new ServiceQuestion();
+  let serviceTopic = new ServiceTopic();
 
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [myTopic, setmyTopic] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [updateLastQuestion, setUpdateLastQuestion] = useState("");
@@ -22,15 +25,18 @@ const EditQuestion = () => {
   const inputIsActivate = useRef("");
 
   useEffect(() => {
-    service.getById(params.id).then((data) => {
+    serviceTopic.getById(topic).then((data) => {
+      setmyTopic(data);
+    });
+    service.getById(id).then((data) => {
       setQuestion(data[0]);
       setAnswers(data[0].Answers);
       setIsLoading(false);
     });
-  }, [params.id]);
+  }, [id]);
 
   const back = () => {
-    navigate("/Questions");
+    navigate("/Questions/" + topic);
   };
 
   const updateQuestion = () => {
@@ -47,9 +53,7 @@ const EditQuestion = () => {
     };
 
     setQuestion(questionBefore);
-    setUpdateLastQuestion(new Date().toLocaleDateString());
-    console.log(updateLastQuestion);
-    service.put(questionBefore.id, questionBefore);
+    service.put(questionBefore);
   };
 
   const updateInputAnswers = (e, index) => {

@@ -19,10 +19,10 @@ const ManageTest = () => {
     serviceTopic.getById(params.id).then((Data) => {
       setTopic(Data);
       console.log("topic", Data);
-    });
-    serviceTest.get().then((tests) => {
-      setTests(tests);
-      console.log("tests", tests);
+      serviceTest.get().then((tests) => {
+        setTests(tests);
+        console.log("tests", tests);
+      });
     });
     setIsLoading(false);
   }, [params.id]);
@@ -30,7 +30,6 @@ const ManageTest = () => {
   if (isLoading) {
     return <h3>is Loading....</h3>;
   }
-
   const theFilterSearch = () => {
     let searchTest = [];
     tests.map((item) => {
@@ -49,7 +48,6 @@ const ManageTest = () => {
   };
   const editTest = (id) => {
     navigate("/editTest/" + id);
-    debugger;
   };
   const showTest = (id) => {
     navigate("/showTest/" + id);
@@ -58,7 +56,6 @@ const ManageTest = () => {
     navigate("/startTest/" + id);
   };
   const deleteTest = (item) => {
-    debugger;
     console.log("item--", item);
     console.log("id--", item.id);
     let newTopic = topic;
@@ -66,7 +63,7 @@ const ManageTest = () => {
     setTopic(newTopic);
     console.log("topic---", topic);
     setTests((state) => state.filter((v) => v != item));
-    serviceTopic.put(params.id, topic);
+    serviceTopic.put(topic);
     serviceTest.delete(item.id);
   };
   return (
@@ -97,7 +94,7 @@ const ManageTest = () => {
             </tr>
           </thead>
           {tests
-            .filter((test) => topic.testid.includes(test.id))
+            .filter((test) => topic.testId.includes(test.id))
             .map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>

@@ -1,16 +1,16 @@
 class ServiceTest {
   get() {
-    return fetch("http://localhost:3030/Tests")
+    return fetch("http://localhost:4000/api/Tests/getTests")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/Tests/" + id)
+    return fetch("http://localhost:4000/api/Tests/" + id)
       .then(this.success)
       .catch(this.failure);
   }
   post(test) {
-    return fetch("http://localhost:3030/Tests/", {
+    return fetch("http://localhost:4000/api/Tests/addTest", {
       method: "POST",
       body: JSON.stringify(test),
       headers: {
@@ -20,8 +20,8 @@ class ServiceTest {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, test) {
-    return fetch("http://localhost:3030/Tests/" + id, {
+  put(test) {
+    return fetch("http://localhost:3030/Tests/updateTest", {
       method: "PUT",
       body: JSON.stringify(test),
       headers: {
@@ -32,7 +32,7 @@ class ServiceTest {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/" + id, {
+    return fetch("http://localhost:3030/Tests/deleteTest/" + id, {
       method: "DELETE",
     })
       .then(this.success)

@@ -1,16 +1,16 @@
 class ServiceAccount {
   get() {
-    return fetch("http://localhost:3030/account")
+    return fetch("http://localhost:4000/api/Accounts/getAccounts")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/account/" + id)
+    return fetch("http://localhost:4000/api/Accounts/" + id)
       .then(this.success)
       .catch(this.failure);
   }
   post(account) {
-    return fetch("http://localhost:3030/account/", {
+    return fetch("http://localhost:4000/api/Accounts/addAccount", {
       method: "POST",
       body: JSON.stringify(account),
       headers: {
@@ -20,8 +20,8 @@ class ServiceAccount {
       .then(this.success)
       .catch(this.failure);
   }
-  put(id, account) {
-    return fetch("http://localhost:3030/account/" + id, {
+  put(account) {
+    return fetch("http://localhost:4000/api/Accounts/", {
       method: "PUT",
       body: JSON.stringify(account),
       headers: {
@@ -32,7 +32,7 @@ class ServiceAccount {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/account/" + id, {
+    return fetch("http://localhost:4000/api/Accounts/deleteAccount" + id, {
       method: "DELETE",
     })
       .then(this.success)

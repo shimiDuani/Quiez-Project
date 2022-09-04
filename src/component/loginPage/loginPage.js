@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
+import ServiceAdmin from "../../service/serviceAdmin";
 import "./loginPage.scss";
 
 function LoginPage() {
   // React States
   const navigate = useNavigate();
+  const service = new ServiceAdmin();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -13,9 +15,10 @@ function LoginPage() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3030/admin")
-      .then((response) => response.json())
-      .then((data) => SetUsers(data));
+    service.get().then((data) => {
+      console.log("admins", data);
+      SetUsers(data);
+    });
     console.log(users);
     setIsLoading(false);
   }, []);
@@ -30,7 +33,7 @@ function LoginPage() {
 
   const handleSubmit = (event) => {
     //Prevent page reload
-    debugger;
+
     event.preventDefault();
 
     var { uname, pass } = document.forms[0];
@@ -54,7 +57,6 @@ function LoginPage() {
     }
   };
   const goToPage = () => {
-    debugger;
     navigate("/chooseAccount/" + user.id);
   };
 

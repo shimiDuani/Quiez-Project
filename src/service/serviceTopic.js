@@ -1,16 +1,16 @@
 class ServiceTopic {
   get() {
-    return fetch("http://localhost:3030/Topic")
+    return fetch("http://localhost:4000/api/Topics/getTopics")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:3030/Topic/" + id)
+    return fetch("http://localhost:4000/api/Topics/" + id)
       .then(this.success)
       .catch(this.failure);
   }
   post(topic) {
-    return fetch("http://localhost:3030/Topic/", {
+    return fetch("http://localhost:4000/api/Topics/addTopic", {
       method: "POST",
       body: JSON.stringify(topic),
       headers: {
@@ -21,7 +21,7 @@ class ServiceTopic {
       .catch(this.failure);
   }
   put(id, topic) {
-    return fetch("http://localhost:3030/Topic/" + id, {
+    return fetch("http://localhost:4000/api/Topics/updateTopic" + id, {
       method: "PUT",
       body: JSON.stringify(topic),
       headers: {
@@ -32,7 +32,7 @@ class ServiceTopic {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/Topic/" + id, {
+    return fetch("http://localhost:4000/api/Topics/deleteTopic" + id, {
       method: "DELETE",
     })
       .then(this.success)
