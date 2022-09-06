@@ -23,10 +23,7 @@ const ChooseAccount = () => {
       console.log("admin", data);
       setAdmin(data);
       console.log("admin1", admin);
-      //tempData=data;
       serviceAccount.get().then((accounts) => {
-        // debugger
-        // accounts.filter((account) => !admin.accountId.includes(account.id));
         console.log("accounts", accounts);
         setAccounts(accounts);
         setAccount(accounts[0].id);
@@ -44,27 +41,26 @@ const ChooseAccount = () => {
 
   const goToAccount = (account) => {
     console.log(account);
-    navigate("/mainMenu/" + account); //send account.id
+    navigate("/mainMenu/" + admin.id + "/" + account); //send account.id
   };
-
-  // const goToImage = (id) => {
-  //   navigate("/gallery/" + id);
-  // };
   const handleChange = (event) => {
     setAccount(event.target.value);
   };
   return (
     <div className="choose">
+      <h1>Hello {admin.name}</h1>
+
       <DropDown
-        text={"Choose Account:"}
+        text={"Choose University :"}
         options={accounts.filter((account) =>
           admin.accountId.includes(account.id)
         )}
         onChange={handleChange}
-        //  value={account}
       />
       <div className="submit">
-        <Button onClick={() => goToAccount(account)}>Submit</Button>
+        <button class="btn btn-success" onClick={() => goToAccount(account)}>
+          Submit
+        </button>
       </div>
     </div>
   );

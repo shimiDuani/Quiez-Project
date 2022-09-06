@@ -1,18 +1,18 @@
-class ServiceTopic {
+class ServiceFinishTest {
   get() {
-    return fetch("http://localhost:4000/api/Topics/getTopics")
+    return fetch("http://localhost:4000/api/FinishTest/getFinishTests")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:4000/api/Topics/" + id)
+    return fetch("http://localhost:4000/api/FinishTest/" + id)
       .then(this.success)
       .catch(this.failure);
   }
-  post(topic) {
-    return fetch("http://localhost:4000/api/Topics/addTopic", {
+  post(test) {
+    return fetch("http://localhost:4000/api/FinishTest/addFinishTest", {
       method: "POST",
-      body: JSON.stringify(topic),
+      body: JSON.stringify(test),
       headers: {
         "Content-Type": "application/json",
       },
@@ -20,10 +20,10 @@ class ServiceTopic {
       .then(this.success)
       .catch(this.failure);
   }
-  put(topic) {
-    return fetch("http://localhost:4000/api/Topics/updateTopic", {
+  put(test) {
+    return fetch("http://localhost:4000/api/FinishTest/updateFinishTest", {
       method: "PUT",
-      body: JSON.stringify(topic),
+      body: JSON.stringify(test),
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,9 +32,12 @@ class ServiceTopic {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:4000/api/Topics/deleteTopic" + id, {
-      method: "DELETE",
-    })
+    return fetch(
+      "http://localhost:4000/api/FinishTest/deleteFinishTest/" + id,
+      {
+        method: "DELETE",
+      }
+    )
       .then(this.success)
       .catch(this.failure);
   }
@@ -51,4 +54,4 @@ class ServiceTopic {
     console.log(error);
   }
 }
-export default ServiceTopic;
+export default ServiceFinishTest;

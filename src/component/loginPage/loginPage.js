@@ -71,17 +71,19 @@ function LoginPage() {
     <div className=" login">
       <form onSubmit={handleSubmit}>
         <div className="input-container">
-          <label>Username</label>
+          <label>Username : </label>
           <input type="text" name="uname" required />
           {renderErrorMessage("uname")}
         </div>
         <div className="input-container">
-          <label>Password </label>
+          <label>Password : </label>
           <input type="password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="button-container">
-          <input type="submit" />
+          <button type="submit" class="btn btn-success">
+            Login
+          </button>
         </div>
       </form>
     </div>
@@ -89,13 +91,15 @@ function LoginPage() {
   return (
     <div className="app">
       <div className="login-form">
-        <div className="title">Sign In</div>
+        <p className="title">Log In</p>
         {isSubmitted ? (
           <div>
             <p className="onSuccess">
               User: {user.name} is successfully logged in
             </p>
-            <button onClick={() => goToPage()}>Go to page</button>
+            <button class="btn btn-primary" onClick={() => goToPage()}>
+              Go to page
+            </button>
           </div>
         ) : (
           renderForm

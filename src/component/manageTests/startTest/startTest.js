@@ -10,9 +10,9 @@ function StartTest() {
   const [test, setTest] = useState(null);
   const service = new ServiceTest();
   const navigate = useNavigate();
-  let params = useParams();
+  const { admin, account, topic, id } = useParams();
   useEffect(() => {
-    service.getById(params.id).then((data) => {
+    service.getById(id).then((data) => {
       setTest(data);
       console.log(data);
       console.log(data.Questions);
@@ -22,9 +22,9 @@ function StartTest() {
       //   setAnswers(data.Qustions.Answers);
       setIsLoading(false);
     });
-  }, [params.id]);
+  }, [id]);
   const strat = () => {
-    navigate("/test/" + params.id);
+    navigate("/test/" + admin + "/" + account + "/" + topic + "/" + id);
   };
   if (isLoading) {
     return <h3>is Loading....</h3>;

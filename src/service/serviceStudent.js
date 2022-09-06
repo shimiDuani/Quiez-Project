@@ -1,18 +1,18 @@
-class ServiceTopic {
+class ServiceStudent {
   get() {
-    return fetch("http://localhost:4000/api/Topics/getTopics")
+    return fetch("http://localhost:4000/api/Students/getStudents")
       .then(this.success)
       .catch(this.failure);
   }
   getById(id) {
-    return fetch("http://localhost:4000/api/Topics/" + id)
+    return fetch("http://localhost:4000/api/Students/" + id)
       .then(this.success)
       .catch(this.failure);
   }
-  post(topic) {
-    return fetch("http://localhost:4000/api/Topics/addTopic", {
+  post(student) {
+    return fetch("http://localhost:4000/api/Students/addStudent", {
       method: "POST",
-      body: JSON.stringify(topic),
+      body: JSON.stringify(student),
       headers: {
         "Content-Type": "application/json",
       },
@@ -20,10 +20,10 @@ class ServiceTopic {
       .then(this.success)
       .catch(this.failure);
   }
-  put(topic) {
-    return fetch("http://localhost:4000/api/Topics/updateTopic", {
+  put(student) {
+    return fetch("http://localhost:4000/api/Students/updateStudent", {
       method: "PUT",
-      body: JSON.stringify(topic),
+      body: JSON.stringify(student),
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,7 @@ class ServiceTopic {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:4000/api/Topics/deleteTopic" + id, {
+    return fetch("http://localhost:4000/api/Students/deleteStudent/" + id, {
       method: "DELETE",
     })
       .then(this.success)
@@ -51,4 +51,4 @@ class ServiceTopic {
     console.log(error);
   }
 }
-export default ServiceTopic;
+export default ServiceStudent;

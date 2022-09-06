@@ -1,7 +1,12 @@
-.container {
+.bigDiv {
+  display: grid;
+  margin: 100px;
+  margin-left: 600px;
   button {
-    width: 30px;
-    height: 30px;
-    padding: 20p;
+    width: 70px;
+    margin-bottom: -23px;
+  }
+  input [type="submit"] {
+    width: 70px;
   }
 }

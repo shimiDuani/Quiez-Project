@@ -6,26 +6,28 @@ import { useState, useEffect, useRef } from "react";
 import "./manageTest.scss";
 
 const ManageTest = () => {
-  let params = useParams();
+  let { admin, account, id } = useParams();
   const navigate = useNavigate();
   let serviceTest = new ServiceTest();
   let serviceTopic = new ServiceTopic();
   const ref = useRef();
+  const [topicTestId, setTopicTestId] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [topic, setTopic] = useState(null);
   const [tests, setTests] = useState([]);
   const [query, setQuery] = useState("");
+
   useEffect(() => {
-    serviceTopic.getById(params.id).then((Data) => {
+    serviceTopic.getById(id).then((Data) => {
       setTopic(Data);
       console.log("topic", Data);
       serviceTest.get().then((tests) => {
         setTests(tests);
         console.log("tests", tests);
+        setIsLoading(false);
       });
     });
-    setIsLoading(false);
-  }, [params.id]);
+  }, [id]);
 
   if (isLoading) {
     return <h3>is Loading....</h3>;
@@ -44,28 +46,39 @@ const ManageTest = () => {
     setTests(searchTest);
   };
   const createTest = () => {
-    navigate("/createTest/" + params.id);
+    navigate("/createTest/" + admin + "/" + account + "/" + topic.id);
   };
   const editTest = (id) => {
-    navigate("/editTest/" + id);
+    navigate("/editTest/" + admin + "/" + account + "/" + topic.id + "/" + id);
   };
   const showTest = (id) => {
-    navigate("/showTest/" + id);
+    navigate("/showTest/" + admin + "/" + account + "/" + topic.id + "/" + id);
   };
   const startTest = (id) => {
-    navigate("/startTest/" + id);
+    navigate("/startTest/" + admin + "/" + account + "/" + topic.id + "/" + id);
   };
+
+  const back = () => {
+    navigate("/mainMenu/" + admin + "/" + account);
+  };
+
   const deleteTest = (item) => {
     console.log("item--", item);
     console.log("id--", item.id);
+    setTopicTestId(topic.testId);
+    const newTopicTestId = topicTestId.filter((testId) => testId !== item.id);
+    setTopicTestId(newTopicTestId);
     let newTopic = topic;
-    newTopic.testid.pop(item.id);
+    newTopic.testId = newTopicTestId;
     setTopic(newTopic);
     console.log("topic---", topic);
-    setTests((state) => state.filter((v) => v != item));
+    let newTests = tests;
+    newTests.filter((test) => test.id !== item.id);
+    setTests(newTests);
     serviceTopic.put(topic);
     serviceTest.delete(item.id);
   };
+
   return (
     <div>
       <h1>Manage Tests</h1>
@@ -78,7 +91,13 @@ const ManageTest = () => {
             onChange={(e) => setQuery(e.target.value)}
             className="search"
           />
-          <button onClick={theFilterSearch}>search</button>
+          <button
+            type="button"
+            class="btn btn-success"
+            onClick={theFilterSearch}
+          >
+            search
+          </button>
         </span>
       </div>
       <div>
@@ -107,16 +126,49 @@ const ManageTest = () => {
                 <td>{item.language}</td>
                 <td>{item.passingGrade}</td>
                 <td>
-                  <button onClick={() => showTest(item.id)}>Show</button>
-                  <button onClick={() => editTest(item.id)}>Edit</button>
-                  <button onClick={() => startTest(item.id)}>Strat</button>
-                  <button onClick={() => deleteTest(item)}>Delete</button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => showTest(item.id)}
+                  >
+                    Show
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onClick={() => editTest(item.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    onClick={() => startTest(item.id)}
+                  >
+                    Start
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onClick={() => deleteTest(item)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
         </table>
       </div>
-      <button onClick={() => createTest()}>create</button>
+      <button
+        type="button"
+        class="btn btn-success"
+        onClick={() => createTest()}
+      >
+        create
+      </button>
+      <button type="button" class="btn btn-secondary" onClick={() => back()}>
+        back
+      </button>
     </div>
   );
 };

@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const CreateTest = () => {
-  let params = useParams();
+  let { admin, account, id } = useParams();
+
   const navigate = useNavigate();
   let serviceQuestion = new ServiceQuestion();
   let serviceTest = new ServiceTest();
@@ -23,26 +24,25 @@ const CreateTest = () => {
   const inputDate = useRef(null);
   const inputLanguage = useRef(null);
   const passingGrade = useRef(null);
-
   useEffect(() => {
-    serviceQuestion.get().then((questions) => {
-      setQuestions(questions);
-      console.log(questions);
-    });
-    serviceTest.get().then((data) => {
-      setTests(data);
-      console.log(data);
-      setIsLoading(false);
-    });
-    serviceTopic.getById(params.id).then((data) => {
+    serviceTopic.getById(id).then((data) => {
       console.log("topic", data);
-      console.log("Topic Id", data.testid);
+      console.log("Topic Id", data.testId);
       setTopic(data);
-      setTopicTestId(data.testid);
+      setTopicTestId(data.testId);
+      setIsLoading(false);
+      serviceQuestion.get().then((questions) => {
+        setQuestions(questions);
+        console.log(questions);
+        serviceTest.get().then((data) => {
+          setTests(data);
+          console.log(data);
+        });
+      });
     });
-  }, []);
+  }, [id]);
   const back = () => {
-    navigate("/Tests/" + params.id);
+    navigate("/Tests/" + admin + "/" + account + "/" + id);
   };
   const addQuestion = (e, item) => {
     console.log("item-----", item);
@@ -54,7 +54,6 @@ const CreateTest = () => {
     e.preventDefault();
     setTestQuestions((state) => state.filter((v) => v != item));
   };
-
   const clickHandle = (e) => {
     e.preventDefault();
     console.log(testQuestions);
@@ -68,16 +67,16 @@ const CreateTest = () => {
       Questions: testQuestions,
     };
     setTests((prev) => [...prev, test]);
-
+    debugger;
     topicTestId.push(test.id);
     console.log("topic-id----", topicTestId);
     let newTopic = topic;
     newTopic.testid = topicTestId;
     setTopic(newTopic);
     console.log("newTopic", topic);
-    serviceTopic.put(params.id, topic);
+    serviceTopic.put(topic);
     serviceTest.post(test);
-    navigate("/Tests/" + params.id);
+    //   navigate("/Tests/" + admin + "/" + account + "/" + id);
   };
   if (isLoading) {
     return <h3>is Loading....</h3>;
@@ -142,4 +141,5 @@ const CreateTest = () => {
     </form>
   );
 };
+
 export default CreateTest;

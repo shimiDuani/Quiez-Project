@@ -9,70 +9,78 @@ import "./mainMenu.scss";
 const MainMenu = () => {
   let serviceAccount = new ServiceAccount();
   let serviceTopic = new ServiceTopic();
-  const params = useParams();
+  const { admin, id } = useParams();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccount] = useState(null);
-  const [topic, setTopic] = useState(null);
+  const [topicID, setTopicID] = useState("");
   const [topics, setTopics] = useState([]);
+
   useEffect(() => {
-    serviceAccount.getById(params.id).then((data) => {
+    serviceAccount.getById(id).then((data) => {
       setAccount(data);
-      console.log("account", data);
-      serviceTopic.get().then((data) => {
-        console.log("topics", data);
-        setTopics(data);
+      console.log("account", account);
+      serviceTopic.get().then((topic) => {
+        console.log("topics", topic);
+        setTopics(topic);
+        setTopicID(topic[0].id);
         setIsLoading(false);
       });
     });
-  }, [params.id]);
+  }, [id]);
 
   if (isLoading) {
     return <h3>is Loading....</h3>;
   }
+
   const handleChange = (event) => {
-    setTopic(event.target.value);
+    setTopicID(event.target.value);
   };
 
   const goToQuestions = () => {
-    if (topic === null) {
-      setTopic(
-        topics.filter((topic) => account.topicsId.includes(topic.id))[0]
-      );
-    }
-    navigate("/Questions/" + topic.id);
+    navigate("/Questions/" + admin + "/" + id + "/" + topicID);
   };
 
   const goToTests = () => {
-    if (topic === null) {
-      setTopic(
-        topics.filter((topic) => account.topicsId.includes(topic.id))[0]
-      );
-    }
-    navigate("/Tests/" + topic.id);
+    navigate("/Tests/" + admin + "/" + id + "/" + topicID);
+  };
+  const goToReports = () => {
+    navigate("/ReportsByTest/" + admin + "/" + id);
+  };
+
+  const back = () => {
+    navigate("/chooseAccount/" + admin);
   };
   return (
     <div className="container">
       <h1>Main Menu - {account.name}</h1>
-      <label>
-        Choose a topic
-        <select onChange={(e) => handleChange(e)} value={topic ? "" : topic}>
-          {topics
-            .filter((topic) => account.topicsId.includes(topic.id))
-            .map((topic, index) => (
-              <option key={index} value={topic.id}>
-                {topic.name}
-              </option>
-            ))}
-        </select>
-      </label>
+      <div>
+        <label>
+          Choose a topic:
+          <select onChange={(e) => handleChange(e)}>
+            {topics
+              .filter((topic) => account.topicsId.includes(topic.id))
+              .map((topic) => (
+                <option key={topic.id} value={topic.id}>
+                  {topic.name}
+                </option>
+              ))}
+          </select>
+        </label>
+      </div>
       <div className="links">
         <a onClick={() => goToQuestions()}>Manage Question</a>
         <a onClick={() => goToTests()}>Manage Tests</a>
-        <a>Reports</a>
+        <a onClick={() => goToReports()}>Reports</a>
       </div>
-
+      <button
+        class="btn btn-secondary
+"
+        onClick={back}
+      >
+        Back
+      </button>
       {/* <Butoon onClick={goToQuestion}>Manage Question</Butoon>
       <Butoon onClick={goToTest}>Manage Tests</Butoon>
       <Butoon onClick={goToReports}>Reports</Butoon> */}

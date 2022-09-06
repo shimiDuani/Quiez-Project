@@ -21,7 +21,7 @@ class ServiceTest {
       .catch(this.failure);
   }
   put(test) {
-    return fetch("http://localhost:3030/Tests/updateTest", {
+    return fetch("http://localhost:4000/api/Tests/updateTest", {
       method: "PUT",
       body: JSON.stringify(test),
       headers: {
@@ -32,7 +32,7 @@ class ServiceTest {
       .catch(this.failure);
   }
   delete(id) {
-    return fetch("http://localhost:3030/Tests/deleteTest/" + id, {
+    return fetch("http://localhost:4000/api/Tests/deleteTest/" + id, {
       method: "DELETE",
     })
       .then(this.success)

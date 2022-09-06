@@ -10,8 +10,18 @@
   }
   .login {
     margin-top: 10px;
+    button {
+      margin: 20px;
+      margin-left: 100px;
+    }
   }
   .onSuccess {
     font-size: larger;
+  }
+  .input-container {
+    label {
+      padding: 10px;
+    }
+    font-weight: bold;
   }
 }

@@ -14,12 +14,12 @@ const ShowQuestion = () => {
 
   const navigate = useNavigate();
 
-  const { topic, id } = useParams();
+  const { topic, id, admin, account } = useParams();
 
   useEffect(() => {
     service.getById(id).then((data) => {
-      setQuestion(data[0]);
-      setAnswers(data[0].Answers);
+      setQuestion(data);
+      setAnswers(data.Answers);
       setIsLoading(false);
       console.log(data);
       console.log(data.Answers);
@@ -31,7 +31,7 @@ const ShowQuestion = () => {
   }
 
   const back = () => {
-    navigate("/Questions/" + topic);
+    navigate("/Questions/" + admin + "/" + account + "/" + topic);
   };
 
   const handleClick = () => {
@@ -76,8 +76,15 @@ const ShowQuestion = () => {
           );
         })}
       </div>
-      <button onClick={handleClick}>change layout</button>
-      <button className="btn" onClick={back}>
+      <button type="button" class="btn btn-success" onClick={handleClick}>
+        change layout
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        className="btn"
+        onClick={back}
+      >
         Back
       </button>
     </div>

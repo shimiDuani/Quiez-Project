@@ -33,3 +33,16 @@
   font-weight: bold;
   color: #009879;
 }
+div {
+  span {
+    label {
+      padding: 5px;
+    }
+    input {
+      margin: 5px;
+    }
+  }
+}
+.buttons {
+  margin-left: 670px;
+}

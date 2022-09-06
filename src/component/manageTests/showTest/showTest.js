@@ -9,9 +9,10 @@ const ShowTest = () => {
   const [Questions, setQuestions] = useState([]);
   const [test, setTest] = useState(null);
   const service = new ServiceTest();
-  let params = useParams();
+  const { admin, account, topic, id } = useParams();
+
   useEffect(() => {
-    service.getById(params.id).then((data) => {
+    service.getById(id).then((data) => {
       setTest(data);
       console.log(data);
       console.log(data.Questions);
@@ -22,10 +23,14 @@ const ShowTest = () => {
       setIsLoading(false);
     });
     console.log(answers);
-  }, [params.id]);
+  }, [id]);
 
   const show = (id) => {
     navigate("/Question/" + id);
+  };
+
+  const back = () => {
+    navigate("/Tests/" + admin + "/" + account + "/" + topic);
   };
 
   if (isLoading) {
@@ -58,13 +63,11 @@ const ShowTest = () => {
             <td>number</td>
             <td>
               <button onClick={() => show(item.id)}>Show</button>
-              <button>Edit</button>
-              <button>Duplicate</button>
-              <button>Delete</button>
             </td>
           </tr>
         ))}
       </table>
+      <button onClick={back}>back</button>
     </div>
   );
 };
